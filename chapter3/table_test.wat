@@ -61,7 +61,7 @@
     )
   )
 
-  (func (export "js_import_test")
+  (func (export "wasm_import_test")
     (loop $inc_cycle
       call $wasm_increment
       i32.const 4_000_000
