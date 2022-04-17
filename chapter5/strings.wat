@@ -15,14 +15,13 @@
   (data (i32.const 640) "\1eanother length-prefixed string")
 
   (func (export "main")
-    (call $null_str (i32.const 0))
-    (call $null_str (i32.const 128))
-
     (call $str_pos_len (i32.const 256) (i32.const 30))
     (call $str_pos_len (i32.const 384) (i32.const 35))
 
-    (call $len_prefix (i32.const 512))
-    (call $len_prefix (i32.const 640))
+    (call $string_copy (i32.const 256) (i32.const 384) (i32.const 30))
+
+    (call $str_pos_len (i32.const 384) (i32.const 35))
+    (call $str_pos_len (i32.const 384) (i32.const 30))
   )
 
   (func $byte_copy
@@ -105,12 +104,15 @@
       local.get $len
       local.get $singles
       i32.sub
-
       local.tee $len_less_singles
 
       local.get $source
       i32.add
+      local.set $start_source_byte
 
+      local.get $len_less_singles
+      local.get $dest
+      i32.add
       local.set $start_dest_byte
 
       (call $byte_copy (local.get $start_source_byte)
