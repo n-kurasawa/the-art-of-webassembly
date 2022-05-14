@@ -13,3 +13,6 @@ const x_offset = 0;
 const y_offset = 4;
 const radius_offset = 8;
 const collision_offset = 12;
+
+const obj_i32_base_index = obj_base_addr / 4;
+const obj_i32_stride = obj_stride / 4;
