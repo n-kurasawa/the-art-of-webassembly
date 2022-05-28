@@ -40,7 +40,7 @@
     local.tee $r_sum_sq
     local.get $r_sum_sq
     i32.mul
-      local.set $r_sum_sq ;; ($r1 + $r2) * ($r1 + $y2)
+      local.tee $r_sum_sq ;; ($r1 + $r2) * ($r1 + $y2)
     
     local.get $x_diff_sq
     local.get $y_diff_sq
@@ -93,10 +93,10 @@
           (call $get_attr (local.tee $i_obj) (global.get $x_offset))
           local.set $xi
 
-          (call $get_attr (local.tee $i_obj) (global.get $y_offset))
+          (call $get_attr (local.get $i_obj) (global.get $y_offset))
           local.set $yi
 
-          (call $get_attr (local.tee $i_obj) (global.get $radius_offset))
+          (call $get_attr (local.get $i_obj) (global.get $radius_offset))
           local.set $ri
 
           (i32.add (global.get $obj_base_addr)
@@ -106,10 +106,10 @@
           (call $get_attr (local.tee $j_obj) (global.get $x_offset))
           local.set $xj
 
-          (call $get_attr (local.tee $j_obj) (global.get $y_offset))
+          (call $get_attr (local.get $j_obj) (global.get $y_offset))
           local.set $yj
 
-          (call $get_attr (local.tee $j_obj) (global.get $radius_offset))
+          (call $get_attr (local.get $j_obj) (global.get $radius_offset))
           local.set $rj
 
           (call $collision_check
@@ -136,4 +136,6 @@
       )
     )
   )
+
+  (start $init)
 )

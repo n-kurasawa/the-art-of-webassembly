@@ -26,7 +26,7 @@ const importObject = {
   env: {
     mem: memory,
     obj_base_addr: obj_base_addr,
-    ojb_count: obj_count,
+    obj_count: obj_count,
     obj_stride: obj_stride,
     x_offset: x_offset,
     y_offset: y_offset,
@@ -35,7 +35,7 @@ const importObject = {
   },
 };
 
-for (let i = 0; i < ojb_count; i++) {
+for (let i = 0; i < obj_count; i++) {
   let index = obj_i32_stride * i + obj_i32_base_index;
   let x = Math.floor(Math.random() * 100);
   let y = Math.floor(Math.random() * 100);
@@ -58,9 +58,9 @@ for (let i = 0; i < ojb_count; i++) {
     let c = !!mem_i32[index + collision_offset_i32];
 
     if (c) {
-      console.log(`obj[${i_str}] x=${x} y=${y} r=${r} colision${c}`.red.bold);
+      console.log(`obj[${i_str}] x=${x} y=${y} r=${r} colision=${c}`.red.bold);
     } else {
-      console.log(`obj[${i_str}] x=${x} y=${y} r=${r} colision${c}`.green);
+      console.log(`obj[${i_str}] x=${x} y=${y} r=${r} colision=${c}`.green);
     }
   }
 })();
