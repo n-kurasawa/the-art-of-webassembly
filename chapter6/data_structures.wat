@@ -69,4 +69,14 @@
     i32.const 1
     i32.store
   )
+
+  (func $init
+    (local $i i32)
+    (local $i_obj i32)
+    (local $xi i32) (local $yi i32) (local $ri i32)
+
+    (local $j i32)
+    (local $j_obj i32)
+    (local $xj i32) (local $yj i32) (local $rj i32)
+  )
 )
