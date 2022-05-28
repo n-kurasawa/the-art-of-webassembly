@@ -78,5 +78,62 @@
     (local $j i32)
     (local $j_obj i32)
     (local $xj i32) (local $yj i32) (local $rj i32)
+
+    (loop $outer_loop
+      (local.set $j (i32.const 0))
+
+      (loop $inner_loop
+        (block $inner_continue
+          (br_if $inner_continue
+            (i32.eq (local.get $i) (local.get $j))
+          )
+          (i32.add (global.get $obj_base_addr)
+            (i32.mul (local.get $i) (global.get $obj_stride))
+          )
+          (call $get_attr (local.tee $i_obj) (global.get $x_offset))
+          local.set $xi
+
+          (call $get_attr (local.tee $i_obj) (global.get $y_offset))
+          local.set $yi
+
+          (call $get_attr (local.tee $i_obj) (global.get $radius_offset))
+          local.set $ri
+
+          (i32.add (global.get $obj_base_addr)
+            (i32.mul (local.get $j) (global.get $obj_stride))
+          )
+
+          (call $get_attr (local.tee $j_obj) (global.get $x_offset))
+          local.set $xj
+
+          (call $get_attr (local.tee $j_obj) (global.get $y_offset))
+          local.set $yj
+
+          (call $get_attr (local.tee $j_obj) (global.get $radius_offset))
+          local.set $rj
+
+          (call $collision_check
+            (local.get $xi) (local.get $yi) (local.get $ri)
+            (local.get $xj) (local.get $yj) (local.get $rj)
+          )
+
+          if
+            (call $set_collision (local.get $i_obj) (local.get $j_obj))
+          end
+        )
+
+        (i32.add (local.get $j) (i32.const 1))
+
+        (br_if $inner_loop
+          (i32.lt_u (local.tee  $j) (global.get $obj_count))
+        )
+      )
+
+      (i32.add (local.get $i) (i32.const 1))
+
+      (br_if $outer_loop
+        (i32.lt_u (local.tee $i) (global.get $obj_count))
+      )
+    )
   )
 )
