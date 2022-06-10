@@ -34,4 +34,6 @@
       br_if $pixel_loop
     )
   )
+
+  (func $abs)
 )
