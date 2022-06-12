@@ -35,5 +35,17 @@
     )
   )
 
-  (func $abs)
+  (func $abs
+    (param $value)
+    (result i32)
+
+    (i32.lt_s (local.get $value) (i32.const 0))
+    if
+      i32.const 0
+      local.get $value
+      i32.sub
+      return
+    end
+    local.get $value
+  )
 )
