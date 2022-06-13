@@ -48,4 +48,10 @@
     end
     local.get $value
   )
+
+  (func $set_pixel
+    (param $x i32)
+    (param $y i32)
+    (param $c i32)
+  )
 )
