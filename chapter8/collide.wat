@@ -53,5 +53,29 @@
     (param $x i32)
     (param $y i32)
     (param $c i32)
+
+    (i32.ge_u (global.get $x) (global.get $cnvs_size))
+    if
+      return
+    end
+
+    (i32.ge_u (global.get $y) (global.get $cnvs_size))
+    if
+      return
+    end
+
+    local.get $y
+    global.get $cnvs_size
+    i32.mul
+
+    local.get $x
+    i32.add
+
+    i32.const 4
+    i32.mul
+
+    local.get $c
+
+    i32.store
   )
 )
