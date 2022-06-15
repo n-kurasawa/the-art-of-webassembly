@@ -78,4 +78,59 @@
 
     i32.store
   )
+
+  (func $draw_obj
+    (param $x i32)
+    (param $y i32)
+    (param $c i32)
+
+    (local $max_x i32)
+    (local $max_y i32)
+
+    (local $xi i32)
+    (local $yi i32)
+
+    local.get $x
+    local.tee $xi
+    global.get $obj_size
+    i32.add
+    local.set $max_x
+
+    local.get $y
+    local.tee $yi
+    global.get $obj_size
+    i32.add
+    local.set $max_y
+
+    (block $break (loop $draw_loop
+      local.get $xi
+      local.get $yi
+      local.get $c
+      call $set_pixel
+
+      local.get $xi
+      i32.const 1
+      i32.add
+      local.tee $xi
+
+      local.get $max_x
+      i32.ge_u
+
+      if
+        local.get $x
+        local.set $xi
+
+        local.get $yi
+        i32.const 1
+        i32.add
+        local.tee $yi
+
+        local.get $max_y
+        i32.ge_u
+        br_if $break 
+      end
+
+      br $draw_loop
+    ))
+  )
 )
