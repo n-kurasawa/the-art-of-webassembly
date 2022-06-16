@@ -133,4 +133,41 @@
       br $draw_loop
     ))
   )
+
+  (func $set_obj_attr
+    (param $obj_number i32)
+    (param $attr_offset i32)
+    (param $value i32)
+
+    local.get $obj_number
+    i32.const 16
+    i32.mul
+
+    global.get $obj_start
+    i32.add
+
+    local.get $attr_offset
+    i32.add
+
+    local.get $value
+    i32.store
+  )
+
+  (func $get_obj_attr
+    (param $obj_number i32)
+    (param $attr_offset i32)
+    (result i32)
+
+    local.get $obj_number
+    i32.const 16
+    i32.mul
+
+    global.get $obj_start
+    i32.add
+
+    local.get $attr_offset
+    i32.add
+
+    i32.load
+  )
 )
