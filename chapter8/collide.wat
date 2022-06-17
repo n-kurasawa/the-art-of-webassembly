@@ -170,4 +170,25 @@
 
     i32.load
   )
+
+  (func $main (export main)
+    (local $i i32)
+    (local $j i32)
+    (local $outer_ptr i32)
+    (local $inner_ptr i32)
+
+    (local $x1 i32)
+    (local $x2 i32)
+    (local $y1 i32)
+    (local $y2 i32)
+
+    (local $xdist i32)
+    (local $ydist i32)
+
+    (local $i_hit i32)
+    (local $xv i32)
+    (local $yv i32)
+
+    (call $clear_canvas)
+  )
 )
