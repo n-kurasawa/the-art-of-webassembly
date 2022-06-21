@@ -171,7 +171,7 @@
     i32.load
   )
 
-  (func $main (export main)
+  (func $main (export "main")
     (local $i i32)
     (local $j i32)
     (local $outer_ptr i32)
@@ -190,5 +190,13 @@
     (local $yv i32)
 
     (call $clear_canvas)
+
+    (loop $move_loop
+      (call $get_obj_attr (local.get $i) (global.get $x_offset))
+      local.set $x1
+
+      (call $get_obj_attr (local.get $i) (global.get $y_offset))
+      local.set $y1
+    )
   )
 )
