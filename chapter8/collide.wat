@@ -197,6 +197,39 @@
 
       (call $get_obj_attr (local.get $i) (global.get $y_offset))
       local.set $y1
+
+      (call $get_obj_attr (local.get $i) (global.get $xv_offset))
+      local.set $xv
+
+      (call $get_obj_attr (local.get $i) (global.get $yv_offset))
+      local.set $yv
+
+      (i32.add (local.get $xv) (local.get $x1))
+      (i32.const  0x1ff)
+      i32.and
+      local.set $x1
+
+      (i32.add (local.get $yv) (local.get $y1))
+      (i32.const  0x1ff)
+      i32.and
+      local.set $y1
+
+      (call $set_obj_attr (local.get $i) (global.get $x_offset) (local.get $x1))
+      (call $set_obj_attr (local.get $i) (global.get $y_offset) (local.get $y1))
+
+      local.get $i
+      i32.const 1
+      i32.add
+      local.tee $i
+      global.get $obj_cnt
+      i32.lt_u
+
+      if
+        br $move_loop
+      end
     )
+
+    i32.const 0
+    local.set $i
   )
 )
