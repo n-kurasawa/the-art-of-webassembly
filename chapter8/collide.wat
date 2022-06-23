@@ -231,5 +231,18 @@
 
     i32.const 0
     local.set $i
+
+    (loop $outer_loop (block $outer_break
+      i32.const 0
+      local.tee $j
+
+      local.set $i_hit
+
+      (call $get_obj_attr (local.get $i) (global.get $x_offset))
+      local.set $x1
+
+      (call $get_obj_attr (local.get $i) (global.get $y_offset))
+      local.set $y1
+    ))
   )
 )
