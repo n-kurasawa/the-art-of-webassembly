@@ -273,6 +273,38 @@
 
         global.get $obj_size
         i32.ge_u
+
+        if
+          local.get $j
+          i32.const 1
+          i32.add
+          local.set $j
+
+          br $innre_loop
+        end
+
+        (call $get_obj_attr (local.get $j) (global.get $y_offset))
+        local.set $y2
+
+        (i32.sub (local.get $y1) (local.get $y2))
+
+        call $abs
+        local.tee $ydist
+
+        global.get $obj_size
+        i32.ge_u
+
+        if
+          local.get $j
+          i32.const 1
+          i32.add
+          local.set $j
+
+          br $inner_loop
+        end
+
+        i32.const 1
+        local.set $i_hit
       ))
     ))
   )
