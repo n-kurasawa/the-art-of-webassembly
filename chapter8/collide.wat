@@ -243,6 +243,37 @@
 
       (call $get_obj_attr (local.get $i) (global.get $y_offset))
       local.set $y1
+      
+      (loop $innre_loop (block $inner_break
+        local.get $i
+        local.get $j
+        i32.eq
+
+        if
+          local.get $j
+          i32.const
+          i32.add
+          local.set $j
+        end
+
+        local.get $j
+        global.get $obj_cnt
+        i32.ge_u
+        if
+          br $inner_break
+        end
+
+        (call $get_obj_attr (local.get $i) (global.get $x_offset))
+        local.set $x2
+
+        (i32.sub (local.get $x1) (local.get $x2))
+
+        call $abs
+        local.tee $xdist
+
+        global.get $obj_size
+        i32.ge_u
+      ))
     ))
   )
 )
