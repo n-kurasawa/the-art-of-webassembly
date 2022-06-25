@@ -1,9 +1,10 @@
 (module
-  (global $cnvs_size (import "cnvs_size") i32)
+  (global $cnvs_size (import "env" "cnvs_size") i32)
 
   (global $no_hit_color (import "env" "no_hit_color") i32)
   (global $hit_color (import "env" "hit_color") i32)
   (global $obj_start (import "env" "obj_start") i32)
+  (global $obj_size (import "env" "obj_size") i32)
   (global $obj_cnt (import "env" "obj_cnt") i32)
 
   (global $x_offset (import "env" "x_offset") i32)
@@ -36,7 +37,7 @@
   )
 
   (func $abs
-    (param $value)
+    (param $value i32)
     (result i32)
 
     (i32.lt_s (local.get $value) (i32.const 0))
@@ -54,12 +55,12 @@
     (param $y i32)
     (param $c i32)
 
-    (i32.ge_u (global.get $x) (global.get $cnvs_size))
+    (i32.ge_u (local.get $x) (global.get $cnvs_size))
     if
       return
     end
 
-    (i32.ge_u (global.get $y) (global.get $cnvs_size))
+    (i32.ge_u (local.get $y) (global.get $cnvs_size))
     if
       return
     end
@@ -244,14 +245,14 @@
       (call $get_obj_attr (local.get $i) (global.get $y_offset))
       local.set $y1
       
-      (loop $innre_loop (block $inner_break
+      (loop $inner_loop (block $inner_break
         local.get $i
         local.get $j
         i32.eq
 
         if
           local.get $j
-          i32.const
+          i32.const 1
           i32.add
           local.set $j
         end
@@ -280,7 +281,7 @@
           i32.add
           local.set $j
 
-          br $innre_loop
+          br $inner_loop
         end
 
         (call $get_obj_attr (local.get $j) (global.get $y_offset))
@@ -306,6 +307,28 @@
         i32.const 1
         local.set $i_hit
       ))
+
+      local.get $i_hit
+      i32.const 0
+      i32.eq
+      if
+        (call $draw_obj
+          (local.get $x1) (local.get $y1) (global.get $no_hit_color))
+      else
+        (call $draw_obj
+          (local.get $x1) (local.get $y1) (global.get $hit_color))
+      end
+
+      local.get $i
+      i32.const 1
+      i32.add
+      local.tee $i
+
+      global.get $obj_cnt
+      i32.lt_u
+      if
+        br $outer_loop
+      end
     ))
   )
 )
